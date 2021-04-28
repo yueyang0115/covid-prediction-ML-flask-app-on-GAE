@@ -1,4 +1,6 @@
-# IDS721 Final Project: Covid Prediction
+# Covid Prediction Flask App on GAE
+Duke IDS 721 Final Project  
+Author: Yue Yang, Jingyi Xie, Jiateng Mao
 
 ## Overview
 In this project, we built a **machine learning** model to predict the number of Covid positive cases and deployed it on **Flask**. The **Flask** app is deployed on **Google App Engine** and can be accessed through a public url. We also verified the elastic scale-up performance via Load Test with **Locust**.
@@ -15,6 +17,12 @@ Here is an image of the frontend website:
 ![CleanShot 2021-04-20 at 22 06 08](https://user-images.githubusercontent.com/49466651/115486455-ad015480-a224-11eb-850e-4a5913e8c605.png)
 Here is an image of the load test result:  
 ![CleanShot 2021-04-20 at 21 42 03](https://user-images.githubusercontent.com/49466651/115485025-e84e5400-a221-11eb-8285-4a62499597d4.png)
+
+## Reference
+Souece Code: [github.com/noahgift/container-revolution-devops-microservices](https://github.com/noahgift/container-revolution-devops-microservices)  
+Souece Code: [github.com/johnnyAklilu/USCOVID19CasePredictorUpdated](https://github.com/johnnyAklilu/USCOVID19CasePredictorUpdated)  
+Souece Code: [github.com/chugh007/FlightPricePrediction](https://github.com/chugh007/FlightPricePrediction)  
+Souece Code: [github.com/yueyang0115/flask-app-GCP-deploy](https://github.com/yueyang0115/flask-app-GCP-deploy)  
 
 ## How to build from scratch
 To deploy this ML model and Flask app on Google Cloud Platform, you can follow these steps:
@@ -41,7 +49,8 @@ You can test it from the frontend website or send a POST request to the running 
 ```
 bash predict-local.sh
 ```
-### Deployed this app on GCP
+
+### Deploy this app on GCP
 (optional) Verfiy the current project is working. Switch your project if it's not what you want.  
 ```
 gcloud projects describe $GOOGLE_CLOUD_PROJECT
@@ -60,11 +69,19 @@ You can test it from the frontend website or send a POST request to the running 
 ```
 bash predict.sh
 ```
-### Load Test with locust
+
+### Load test with locust
 Run following command, the locust server will be running on http://0.0.0.0:8089/.  
 ```
 locust
 ```
 Go to the webpage, fill out the form and try to test it.  
+
+### Set up CD
+Documents:  [Automate App Engine deployments with Cloud Build](https://cloud.google.com/source-repositories/docs/quickstart-triggering-builds-with-source-repositories).  
+Create **cloudbuild.yaml** file.  
+Open GCP Cloud Build console.  
+Select Trigger and create a new **trigger**, set repository event to "Push to a branch", connnect your related github repository as the source to watch for events, chosse master branch.  
+Go to settings in Cloud Build, **enable App Engine and Service accounts**.  
 
 ### Done!
