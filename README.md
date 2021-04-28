@@ -3,7 +3,10 @@ Duke IDS 721 Final Project
 Author: Yue Yang, Jingyi Xie, Jiateng Mao
 
 ## Overview
-In this project, we built a **machine learning** model to predict the number of Covid positive cases and deployed it on **Flask**. The **Flask** app is deployed on **Google App Engine** and can be accessed through a public url. We also verified the elastic scale-up performance via Load Test with **Locust**.
+In this project, we built a **machine learning** model to predict the number of Covid positive cases and deployed it on **Flask**.  
+The **Flask** app is deployed on **Google App Engine(GAE)** and can be accessed through a public url.  
+We configured **Cloud Build** for **continuous deployment(CD)**.  
+We also verified the elastic scale-up performance via load test with **Locust**.  
 * Application Deployed on: https://covid-prediction-311000.uc.r.appspot.com
 * ML Framework: Sklearn
 * Platform: Flask + Google App Engine
@@ -15,7 +18,7 @@ The workflow of this project is as below:
 
 Here is an image of the frontend website:  
 ![CleanShot 2021-04-20 at 22 06 08](https://user-images.githubusercontent.com/49466651/115486455-ad015480-a224-11eb-850e-4a5913e8c605.png)
-Here is an image of the load test result:  
+Here is an image of the load test result. It shows that our app can scale to 1K+ requests served by multiple endpoints.    
 ![CleanShot 2021-04-20 at 21 42 03](https://user-images.githubusercontent.com/49466651/115485025-e84e5400-a221-11eb-8285-4a62499597d4.png)
 
 ## Reference
@@ -25,11 +28,29 @@ Souece Code: [github.com/chugh007/FlightPricePrediction](https://github.com/chug
 Souece Code: [github.com/yueyang0115/flask-app-GCP-deploy](https://github.com/yueyang0115/flask-app-GCP-deploy)  
 
 ## How to build from scratch
-To deploy this ML model and Flask app on Google Cloud Platform, you can follow these steps:
+Read through the files and understand how it works.  
+* ```main.py``` is the main workflow of the project. It trains model and directs to the flask web. 
+* ```national-history-update.csv``` is the dataset for training the ML model.
+* ```Makefile``` is used for installing packages and others.
+* ```requirements.txt``` is required for the Makefile.
+* ```app.yaml``` is required for deployment on Google App Engine.  
+* ```cloudbuild.yaml``` is required for continuous deployment with Cloud Build.
+* ```locustfile.py``` is required for load test via locust.  
+* ```predict-local.sh``` is required for testing the app which runs locally by sending POST request to it through script.
+* ```predict.sh``` is required for testing the app which runs on cloud by sending POST request to it through script.
+* ```/templates``` folder contains the templete html page for the flask app.  
+
+To build this project from scratch, you can follow these steps:
 
 ### Set up project
 Launch Google Cloud Platform, create a new project. Change your current project to it and activate Cloud Shell.  
-Git clone this repository to your GCP local and cd into it.  
+To configure CD with Cloud Build, you will need to create your own github repo. Otherwise you can just git clone this repo and skip the steps below.  
+Create ssh-keys and upload it to Github.
+```
+ssh-keygen -t rsa
+```
+Create a new repo on github, git clone it to your GCP local and cd into it. Upload all the files in this repo to your new repo.  
+
 
 ### Run this app locally
 Create a virtual environment and activate it. (To deactivate it, run ```deactivate```).  
@@ -70,18 +91,20 @@ You can test it from the frontend website or send a POST request to the running 
 bash predict.sh
 ```
 
+### Set up CD with Cloud Build
+Documents:  [Automate App Engine deployments with Cloud Build](https://cloud.google.com/source-repositories/docs/quickstart-triggering-builds-with-source-repositories).  
+Create **cloudbuild.yaml** file.  
+Open GCP Cloud Build console.  
+Select Trigger and create a new **trigger**, set repository event to "Push to a branch", connnect your related github repository as the source to watch for events, chosse master branch.  
+Go to settings in Cloud Build, **enable App Engine and Service accounts**.  
+Now, if you make a new push, this app will be redeployed automatically and you can find the pipeline under Cloud Build.
+
 ### Load test with locust
 Run following command, the locust server will be running on http://0.0.0.0:8089/.  
 ```
 locust
 ```
 Go to the webpage, fill out the form and try to test it.  
-
-### Set up CD
-Documents:  [Automate App Engine deployments with Cloud Build](https://cloud.google.com/source-repositories/docs/quickstart-triggering-builds-with-source-repositories).  
-Create **cloudbuild.yaml** file.  
-Open GCP Cloud Build console.  
-Select Trigger and create a new **trigger**, set repository event to "Push to a branch", connnect your related github repository as the source to watch for events, chosse master branch.  
-Go to settings in Cloud Build, **enable App Engine and Service accounts**.  
+<img width="1279" alt="locust" src="https://user-images.githubusercontent.com/44473421/116341182-755b5500-a7ae-11eb-971f-ddef7019c78b.png">
 
 ### Done!
