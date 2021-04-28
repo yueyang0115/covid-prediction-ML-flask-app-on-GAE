@@ -1,5 +1,5 @@
 # Covid Prediction Flask App on GAE
-Duke IDS 721 Final Project  
+
 Author: Yue Yang, Jingyi Xie, Jiateng Mao
 
 ## Overview
