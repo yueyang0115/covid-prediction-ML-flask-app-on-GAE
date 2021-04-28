@@ -3,7 +3,7 @@ Duke IDS 721 Final Project
 Author: Yue Yang, Jingyi Xie, Jiateng Mao
 
 ## Overview
-In this project, we built a **machine learning** model to predict the number of Covid positive cases and deployed it on **Flask**. The **Flask** app is deployed on **Google App Engine(GAE)** and can be accessed through a public url. We configured **Cloud Build** for **continuous deployment(CD)**. We also verified the elastic scale-up performance via load test with **Locust**.  
+In this project, we built a **machine learning** model to predict the number of Covid positive cases and deployed it on **Flask**. The **Flask** app is deployed to **Google App Engine(GAE)** and can be accessed through a public url. We configured **Cloud Build** for **continuous deployment(CD)**. We also verified the elastic scale-up performance via load test with **Locust**.  
 * Application Deployed on: https://covid-prediction-311000.uc.r.appspot.com
 * ML Framework: Sklearn
 * Platform: Flask + Google App Engine
@@ -68,7 +68,7 @@ You can test it from the frontend website or send a POST request to the running 
 bash predict-local.sh
 ```
 
-### Deploy this app on GCP
+### Deploy this app to GAE
 (optional) Verfiy the current project is working. Switch your project if it's not what you want.  
 ```
 gcloud projects describe $GOOGLE_CLOUD_PROJECT
