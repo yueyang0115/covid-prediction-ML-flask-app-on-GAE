@@ -3,10 +3,7 @@ Duke IDS 721 Final Project
 Author: Yue Yang, Jingyi Xie, Jiateng Mao
 
 ## Overview
-In this project, we built a **machine learning** model to predict the number of Covid positive cases and deployed it on **Flask**.  
-The **Flask** app is deployed on **Google App Engine(GAE)** and can be accessed through a public url.  
-We configured **Cloud Build** for **continuous deployment(CD)**.  
-We also verified the elastic scale-up performance via load test with **Locust**.  
+In this project, we built a **machine learning** model to predict the number of Covid positive cases and deployed it on **Flask**. The **Flask** app is deployed on **Google App Engine(GAE)** and can be accessed through a public url. We configured **Cloud Build** for **continuous deployment(CD)**. We also verified the elastic scale-up performance via load test with **Locust**.  
 * Application Deployed on: https://covid-prediction-311000.uc.r.appspot.com
 * ML Framework: Sklearn
 * Platform: Flask + Google App Engine
@@ -93,10 +90,11 @@ bash predict.sh
 
 ### Set up CD with Cloud Build
 Documents:  [Automate App Engine deployments with Cloud Build](https://cloud.google.com/source-repositories/docs/quickstart-triggering-builds-with-source-repositories).  
-Create **cloudbuild.yaml** file.  
-Open GCP Cloud Build console.  
+Create **cloudbuild.yaml** file. Open GCP Cloud Build console.  
 Select Trigger and create a new **trigger**, set repository event to "Push to a branch", connnect your related github repository as the source to watch for events, chosse master branch.  
-Go to settings in Cloud Build, **enable App Engine and Service accounts**.  
+Select "settings", then click on "Cloud Build service account". In the newly open documenation, click on "Open the Cloud Build Settings page". In the new page, **enable App Engine and Service accounts**.  
+<img width="1279" alt="gcp" src="https://user-images.githubusercontent.com/44473421/116343446-6d051900-a7b2-11eb-9318-4fedf8b8833d.png">
+
 Now, if you make a new push, this app will be redeployed automatically and you can find the pipeline under Cloud Build.
 
 ### Load test with locust
